@@ -1,3 +1,3 @@
 # console helpers
 
-useful helpers for console logging things
+Useful helpers for console logging things

@@ -5,9 +5,21 @@
     "main": "dist/commonjs/index.js",
     "module": "dist/esmodules/index.js",
     "types": "dist/commonjs/index.d.ts",
-    "author": "Raphael Thomazella",
     "license": "MIT",
     "private": false,
+    "homepage": "https://github.com/thomazella/console-helpers#readme",
+    "repository": {
+      "type": "git",
+      "url": "git+https://github.com/thomazella/console-helpers.git"
+    },
+    "author": {
+      "name": "Raphael Thomazella",
+      "email": "thomazella9@gmail.com",
+      "url": "https://github.com/thomazella"
+    },
+    "bugs": {
+      "url": "https://github.com/thomazella/console-helpers/issues"
+    },
     "devDependencies": {
         "@babel/core": "^7.7.4",
         "@babel/preset-env": "^7.7.4",
@@ -22,6 +34,9 @@
         "rimraf": "3.0.0",
         "typescript": "3.7.3"
     },
+    "files": [
+      "dist"
+    ],
     "scripts": {
         "test": "jest",
         "build": "yarn clean && yarn build:cjs && yarn build:esm",

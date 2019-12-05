@@ -9,16 +9,16 @@
     "private": false,
     "homepage": "https://github.com/thomazella/console-helpers#readme",
     "repository": {
-      "type": "git",
-      "url": "git+https://github.com/thomazella/console-helpers.git"
+        "type": "git",
+        "url": "git+https://github.com/thomazella/console-helpers.git"
     },
     "author": {
-      "name": "Raphael Thomazella",
-      "email": "thomazella9@gmail.com",
-      "url": "https://github.com/thomazella"
+        "name": "Raphael Thomazella",
+        "email": "thomazella9@gmail.com",
+        "url": "https://github.com/thomazella"
     },
     "bugs": {
-      "url": "https://github.com/thomazella/console-helpers/issues"
+        "url": "https://github.com/thomazella/console-helpers/issues"
     },
     "devDependencies": {
         "@babel/core": "^7.7.4",
@@ -35,7 +35,7 @@
         "typescript": "3.7.3"
     },
     "files": [
-      "dist"
+        "dist"
     ],
     "scripts": {
         "test": "jest",
@@ -47,8 +47,7 @@
         "patch": "npm version patch && npm publish",
         "minor": "npm version minor && npm publish",
         "major": "npm version major && npm publish",
-        "prepublishOnly": "yarn lint",
-        "prepublish": "yarn test && yarn build",
+        "prepare": "yarn lint && yarn test && yarn build",
         "postpublish": "git push origin master --follow-tags"
     },
     "dependencies": {

@@ -4,6 +4,7 @@ import pf from 'pretty-format'
 beforeAll(() => {
     // convenience to debug the functions while console.log is mocked
     console.log2 = console.log
+    jest.spyOn(global.console, 'log').mockImplementation(() => {})
 })
 
 beforeEach(() => {
@@ -16,25 +17,21 @@ beforeEach(() => {
 
 describe('logs', () => {
     it('uses pretty-format', () => {
-        jest.spyOn(global.console, 'log').mockImplementation(() => {})
         const input = { foo: 2 }
         logs(input)
         expect(console.log).toHaveBeenCalledWith('console.logs ', pf(input))
     })
     it('uses passes strings thru', () => {
-        jest.spyOn(global.console, 'log').mockImplementation(() => {})
         const input = 'input'
         logs(input)
         expect(console.log).toHaveBeenCalledWith('console.logs ', input)
     })
     it('strings and object case', () => {
-        jest.spyOn(global.console, 'log').mockImplementation(() => {})
         logs('input', { foo: 2 })
         expect(console.log).toHaveBeenNthCalledWith(1, 'console.logs ', 'input')
         expect(console.log).toHaveBeenNthCalledWith(2, 'console.logs ', pf({ foo: 2 }))
     })
     it('strings and object case, many params', () => {
-        jest.spyOn(global.console, 'log').mockImplementation(() => {})
         logs('input', { foo: 2 }, 'bar', { baz: { bin: 33, gor: false } }, 'melt', 'pelt', {})
         expect(console.log).toHaveBeenNthCalledWith(1, 'console.logs ', 'input')
         expect(console.log).toHaveBeenNthCalledWith(2, 'console.logs ', pf({ foo: 2 }))
@@ -45,6 +42,14 @@ describe('logs', () => {
         expect(console.log).toHaveBeenNthCalledWith(7, 'console.logs ', pf({}))
     })
 })
+
+describe('logk', () => {
+    it('doesnt do anything if has no arguments', () => {
+        logk()
+        expect(console.log).not.toHaveBeenCalled()
+    })
+})
+
 describe('addToGlobalConsole', () => {
     it('addToGlobalConsole adds functions to console', () => {
         addToGlobalConsole()

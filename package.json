@@ -18,10 +18,15 @@
     "eslint": "6.7.2",
     "jest": "24.9.0",
     "prettier": "1.19.1",
+    "rimraf": "3.0.0",
     "typescript": "3.7.3"
   },
   "scripts": {
-    "test": "jest"
+    "test": "jest",
+    "build": "yarn clean && yarn build:cjs && yarn build:esm",
+    "build:cjs": "tsc --module commonjs --outDir ./dist/commonjs",
+    "build:esm": "tsc",
+    "clean": "rimraf dist"
   },
   "dependencies": {
     "pretty-format": "24.9.0"

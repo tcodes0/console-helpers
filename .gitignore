@@ -85,3 +85,5 @@ reports
 
 # typescript composite build info
 tsconfig.tsbuildinfo
+
+./dist/*

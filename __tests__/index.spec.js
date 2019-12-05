@@ -16,12 +16,16 @@ beforeEach(() => {
 })
 
 describe('logs', () => {
+    it('doesnt do anything if has no arguments', () => {
+        logs()
+        expect(console.log).not.toHaveBeenCalled()
+    })
     it('uses pretty-format', () => {
         const input = { foo: 2 }
         logs(input)
         expect(console.log).toHaveBeenCalledWith('console.logs ', pf(input))
     })
-    it('uses passes strings thru', () => {
+    it('passes strings thru', () => {
         const input = 'input'
         logs(input)
         expect(console.log).toHaveBeenCalledWith('console.logs ', input)

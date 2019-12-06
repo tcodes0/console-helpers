@@ -1,5 +1,6 @@
 import { addToGlobalConsole, logs, logk } from '../src'
 import pf from 'pretty-format'
+import { noop } from '../src/utils'
 
 beforeAll(() => {
     // convenience to debug the functions while console.log is mocked
@@ -70,5 +71,15 @@ describe('addToGlobalConsole', () => {
         addToGlobalConsole()
         expect(console.logk).toBe(logk)
         expect(console.logs).toBe(logs)
+    })
+    it('addToGlobalConsole isProd argument false', () => {
+        addToGlobalConsole(false)
+        expect(console.logk).toBe(logk)
+        expect(console.logs).toBe(logs)
+    })
+    it('addToGlobalConsole isProd argument true', () => {
+        addToGlobalConsole(true)
+        expect(console.logk).toBe(noop)
+        expect(console.logs).toBe(noop)
     })
 })

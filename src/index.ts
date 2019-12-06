@@ -1,4 +1,10 @@
 import prettyFormat from 'pretty-format'
+import { noop } from './utils'
+
+export interface ExtendedConsole extends Console {
+    logs: typeof logs
+    logk: typeof logk
+}
 
 export const logs = (...args: any[]) => {
     const results = []
@@ -26,9 +32,14 @@ export const logk = (...args: any[]) => {
     }
 }
 
-export const addToGlobalConsole = () => {
-    (console as any).logs = logs
-    ;(console as any).logk = logk
+export const addToGlobalConsole = (isProd?: boolean) => {
+    if (isProd) {
+        ;(console as any).logs = noop
+        ;(console as any).logk = noop
+    } else {
+        ;(console as any).logs = logs
+        ;(console as any).logk = logk
+    }
 }
 
 export default {

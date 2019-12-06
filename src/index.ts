@@ -1,5 +1,27 @@
-import prettyFormat from 'pretty-format'
 import { noop } from './utils'
+import { inspect, InspectOptions } from 'util'
+
+export const logOptionsDefault: () => InspectOptions = () => ({
+    showHidden: false,
+    depth: null,
+    colors: true,
+    compact: false,
+})
+let _logOptions = logOptionsDefault()
+export const setLogOptions = (options: InspectOptions) => {
+    _logOptions = options
+    return _logOptions
+}
+export const logOptions = () => _logOptions
+export const addLogOptions = (options: InspectOptions) => {
+    _logOptions = { ..._logOptions, ...options }
+    return _logOptions
+}
+export const resetLogOptions = () => {
+    _logOptions = logOptionsDefault()
+    return _logOptions
+}
+const inspectWithOptions = (options: InspectOptions) => (args: any[]) => inspect(args, options)
 
 export interface ExtendedConsole extends Console {
     logs: typeof logs
@@ -9,7 +31,7 @@ export interface ExtendedConsole extends Console {
 export const logs = (...args: any[]) => {
     const results = []
     for (const arg of args) {
-        typeof arg === 'string' ? results.push(arg) : results.push(prettyFormat(arg))
+        typeof arg === 'string' ? results.push(arg) : results.push(inspectWithOptions(logOptions())(arg))
     }
     for (const result of results) {
         console.log('console.logs', result)

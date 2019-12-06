@@ -51,7 +51,5 @@
         "prepare": "yarn lint && yarn test && yarn build",
         "postpublish": "git push origin master --follow-tags"
     },
-    "dependencies": {
-        "pretty-format": "24.9.0"
-    }
+    "dependencies": {}
 }

@@ -1,6 +1,18 @@
-import { addToGlobalConsole, logs, logk } from '../src'
-import pf from 'pretty-format'
+import {
+    addToGlobalConsole,
+    logs,
+    logk,
+    logOptions,
+    setLogOptions,
+    logOptionsDefault,
+    addLogOptions,
+    resetLogOptions,
+} from '../src'
+import { inspect } from 'util'
 import { noop } from '../src/utils'
+import { fixtures } from '../__fixtures__'
+
+const pf = arg => inspect(arg, logOptions())
 
 beforeAll(() => {
     // convenience to debug the functions while console.log is mocked
@@ -14,6 +26,7 @@ beforeEach(() => {
             console[fn] = undefined
         }
     }
+    resetLogOptions()
 })
 
 describe('logs', () => {
@@ -21,8 +34,8 @@ describe('logs', () => {
         logs()
         expect(console.log).not.toHaveBeenCalled()
     })
-    it('uses pretty-format', () => {
-        const input = { foo: 2 }
+    it('format output prettily', () => {
+        const input = fixtures[0]
         logs(input)
         expect(console.log).toHaveBeenCalledWith('console.logs', pf(input))
     })
@@ -54,8 +67,8 @@ describe('logk', () => {
         expect(console.log).not.toHaveBeenCalled()
     })
     it("logs object's keys", () => {
-        logk({ a: 1, b: 2, c: 3 })
-        expect(console.log).toHaveBeenCalledWith('console.logk', ['a', 'b', 'c'])
+        logk(fixtures[0])
+        expect(console.log).toHaveBeenCalledWith('console.logk', Object.keys(fixtures[0]))
     })
     it('catches errors', () => {
         logk(null)
@@ -81,5 +94,30 @@ describe('addToGlobalConsole', () => {
         addToGlobalConsole(true)
         expect(console.logk).toBe(noop)
         expect(console.logs).toBe(noop)
+    })
+})
+
+describe('setLogOptions', () => {
+    it('setLogOptions', () => {
+        const newOptions = setLogOptions({ compact: true })
+        logs(fixtures[0])
+        expect(console.log).toHaveBeenCalledWith('console.logs', inspect(fixtures[0], newOptions))
+        expect(newOptions).toEqual({
+            compact: true,
+        })
+    })
+    it('addLogOptions', () => {
+        const newOptions = addLogOptions({ compact: true })
+        logs(fixtures[0])
+        expect(console.log).toHaveBeenCalledWith('console.logs', inspect(fixtures[0], newOptions))
+        expect(newOptions).toEqual({
+            ...logOptionsDefault(),
+            compact: true,
+        })
+    })
+    it('resetLogOptions', () => {
+        addLogOptions({ compact: true })
+        resetLogOptions()
+        expect(logOptions()).toEqual(logOptionsDefault())
     })
 })

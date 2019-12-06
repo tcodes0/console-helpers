@@ -6,7 +6,7 @@ export const logs = (...args: any[]) => {
         typeof arg === 'string' ? results.push(arg) : results.push(prettyFormat(arg))
     }
     for (const result of results) {
-        console.log('console.logs ', result)
+        console.log('console.logs', result)
     }
 }
 
@@ -17,12 +17,12 @@ export const logk = (...args: any[]) => {
         try {
             keys = Object.keys(arg)
         } catch (error) {
-            keys = [`invalid input to Object.keys: ${error.message}`]
+            keys = error
         }
         results.push(keys)
     }
     for (const result of results) {
-        console.log('console.logk ', result)
+        console.log('console.logk', result)
     }
 }
 

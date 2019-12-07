@@ -23,7 +23,7 @@ This lib exports some helpers you can either import and use directly or add to `
 
 _maybe a better name would be log as pretty string_
 
-```js
+```typescript
 import { logs } from 'console-helpers'
 
 logs({ foo: { bar: { baz: 22 } } })
@@ -53,7 +53,7 @@ uses [util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_op
 -   complex props with several hocs
 -   props with data from server, but the internals of the data are not so important
 
-```js
+```typescript
 import { logk } from 'console-helpers'
 
 logk({ foo: 22, bar: 33, baz: 44 })
@@ -71,7 +71,7 @@ logk({ foo: 22, bar: 33, baz: 44 })
 
 -   easy access to library functions with no import needed
 
-```js
+```typescript
 // index.js or App.js
 import { addToGlobalConsole } from 'console-helpers'
 
@@ -80,7 +80,7 @@ import { addToGlobalConsole } from 'console-helpers'
 addToGlobalConsole()
 ```
 
-```js
+```typescript
 import { addToGlobalConsole } from 'console-helpers'
 
 const isProd = process.env === 'production'
@@ -116,7 +116,7 @@ console.logk
 
 -   you want to see what the lib thinks are good default options it passes to [util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_options)
 
-```js
+```typescript
 import { logOptionsDefault } from 'console-helpers'
 
 // defaults are: { showHidden: false, depth: null, colors: true, compact: false }
@@ -171,7 +171,7 @@ interface InspectOptions {
 
 -   returns log options currently set
 
-```js
+```typescript
 import { logOptions, logOptionsDefault } from 'console-helpers'
 
 // true
@@ -184,7 +184,7 @@ console.log(logOptions().toString() === logOptionsDefault().toString())
 
 -   set log options to your provided object
 
-```js
+```typescript
 import { setLogOptions } from 'console-helpers'
 
 // logOptions now are: { showHidden: false, colors: false, compact: true, breakLength: 120 }
@@ -197,7 +197,7 @@ console.log(setLogOptions({ showHidden: false, colors: false, compact: true, bre
 
 -   combine defaults with your object, giving your object priority
 
-```js
+```typescript
 import { addLogOptions } from 'console-helpers'
 
 // logOptions now are defaults + { colors: false, breakLength: 120 }: { showHidden: false, depth: null, colors: false, compact: false, breakLength: 120 }
@@ -210,7 +210,7 @@ console.log(addLogOptions({ colors: false, breakLength: 120 }))
 
 -   reset log options to lib default
 
-```js
+```typescript
 import { resetLogOptions, addLogOptions, logOptions, logOptionsDefault } from 'console-helpers'
 
 addLogOptions({ colors: false, breakLength: 120 })

@@ -12,7 +12,7 @@ This lib exports some helpers you can either import and use directly or add to `
 
 # Usage
 
-## logs
+## `logs: (...args: any[]) => void`
 
 `log string`
 
@@ -43,7 +43,7 @@ logs({ foo: { bar: { baz: 22 } } })
 
 uses [util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_options)
 
-## logk
+## `logk: (...args: any[]) => void`
 
 `log keys`
 
@@ -65,7 +65,7 @@ logk({ foo: 22, bar: 33, baz: 44 })
  console.logk  [ 'foo', 'bar', 'baz' ]
 ```
 
-## addToGlobalConsole
+## `addToGlobalConsole: (isProd?: boolean | undefined) => void`
 
 ### use case
 
@@ -110,9 +110,7 @@ console.logk
 
 # Customizing the output
 
-_All functions here that change something return the result_
-
-### logOptionsDefault
+### `logOptionsDefault: () => InspectOptions`
 
 #### use case
 
@@ -125,7 +123,49 @@ import { logOptionsDefault } from 'console-helpers'
 console.log(logOptionsDefault())
 ```
 
-### logOptions
+#### types
+
+```typescript
+// util exports the type
+import { InspectOptions } from 'util'
+
+// @types/node/globals.d.ts
+interface InspectOptions {
+    /**
+     * If set to `true`, getters are going to be
+     * inspected as well. If set to `'get'` only getters without setter are going
+     * to be inspected. If set to `'set'` only getters having a corresponding
+     * setter are going to be inspected. This might cause side effects depending on
+     * the getter function.
+     * @default `false`
+     */
+    getters?: 'get' | 'set' | boolean;
+    showHidden?: boolean;
+    /**
+     * @default 2
+     */
+    depth?: number | null;
+    colors?: boolean;
+    customInspect?: boolean;
+    showProxy?: boolean;
+    maxArrayLength?: number | null;
+    breakLength?: number;
+    /**
+     * Setting this to `false` causes each object key
+     * to be displayed on a new line. It will also add new lines to text that is
+     * longer than `breakLength`. If set to a number, the most `n` inner elements
+     * are united on a single line as long as all properties fit into
+     * `breakLength`. Short array elements are also grouped together. Note that no
+     * text will be reduced below 16 characters, no matter the `breakLength` size.
+     * For more information, see the example below.
+     * @default `true`
+     */
+    compact?: boolean | number;
+    sorted?: boolean | ((a: string, b: string) => number);
+}
+```
+
+### `logOptions: () => InspectOptions;`
 
 #### use case
 
@@ -138,7 +178,7 @@ import { logOptions, logOptionsDefault } from 'console-helpers'
 console.log(logOptions().toString() === logOptionsDefault().toString())
 ```
 
-### setLogOptions
+### `setLogOptions: (options: InspectOptions) => InspectOptions;`
 
 #### use case
 
@@ -151,7 +191,7 @@ import { setLogOptions } from 'console-helpers'
 console.log(setLogOptions({ showHidden: false, colors: false, compact: true, breakLength: 120 }))
 ```
 
-### addLogOptions
+### `addLogOptions: (options: InspectOptions) => InspectOptions;`
 
 #### use case
 
@@ -164,7 +204,7 @@ import { addLogOptions } from 'console-helpers'
 console.log(addLogOptions({ colors: false, breakLength: 120 }))
 ```
 
-### resetLogOptions
+### `resetLogOptions: () => InspectOptions;`
 
 #### use case
 

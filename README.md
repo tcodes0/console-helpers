@@ -213,4 +213,4 @@ logOptions().toString() === logOptionsDefault().toString()
 
 ## To do
 
-Browser support
+Better browser support with pretty format

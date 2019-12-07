@@ -1,6 +1,6 @@
 # Console helpers
 
-console.log helpers
+`console.log` helpers
 
 ## Basically...
 
@@ -11,7 +11,6 @@ This lib exports some helpers you can either import and use directly or add to `
 -   lib also exports a few functions to set options for logging
 
 # Usage
-
 
 ## logs
 
@@ -28,13 +27,18 @@ _maybe a better name would be log as pretty string_
 import { logs } from 'console-helpers'
 
 logs({ foo: { bar: { baz: 22 } } })
-//  console.logs {
-//    foo: {
-//      bar: {
-//        baz: 22
-//      }
-//    }
-//  }
+```
+
+```text
+  // console log output
+
+  console.logs {
+    foo: {
+      bar: {
+        baz: 22
+      }
+    }
+  }
 ```
 
 uses [util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_options)
@@ -53,7 +57,12 @@ uses [util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_op
 import { logk } from 'console-helpers'
 
 logk({ foo: 22, bar: 33, baz: 44 })
-// console.logk  [ 'foo', 'bar', 'baz' ]
+```
+
+```text
+ // console log output
+
+ console.logk  [ 'foo', 'bar', 'baz' ]
 ```
 
 ## addToGlobalConsole
@@ -66,9 +75,9 @@ logk({ foo: 22, bar: 33, baz: 44 })
 // index.js or App.js
 import { addToGlobalConsole } from 'console-helpers'
 
-addToGlobalConsole()
 // console.logs is now defined
 // console.logk is now defined
+addToGlobalConsole()
 ```
 
 ```js
@@ -77,11 +86,11 @@ import { addToGlobalConsole } from 'console-helpers'
 const isProd = process.env === 'production'
 const isDev = process.env !== 'production'
 
-addToGlobalConsole(isDev)
 // if dev it adds logs and logk to console
+addToGlobalConsole(/*isDev*/ false)
 
-addToGlobalConsole(isProd)
 // if prod it adds () => {} instead
+addToGlobalConsole(/*isProd*/ true)
 ```
 
 #### types
@@ -101,6 +110,8 @@ console.logk
 
 # Customizing the output
 
+_All functions here that change something return the result_
+
 ### logOptionsDefault
 
 #### use case
@@ -110,8 +121,8 @@ console.logk
 ```js
 import { logOptionsDefault } from 'console-helpers'
 
+// defaults are: { showHidden: false, depth: null, colors: true, compact: false }
 console.log(logOptionsDefault())
-// logOptions now are: { showHidden: false, depth: null, colors: true, compact: false }
 ```
 
 ### logOptions
@@ -121,10 +132,10 @@ console.log(logOptionsDefault())
 -   returns log options currently set
 
 ```js
-import { logOptions, logOptionsDefault, setLogOptions } from 'console-helpers'
+import { logOptions, logOptionsDefault } from 'console-helpers'
 
-console.log(logOptions().toString() === logOptionsDefault().toString())
 // true
+console.log(logOptions().toString() === logOptionsDefault().toString())
 ```
 
 ### setLogOptions
@@ -136,21 +147,21 @@ console.log(logOptions().toString() === logOptionsDefault().toString())
 ```js
 import { setLogOptions } from 'console-helpers'
 
-console.log(setLogOptions({ showHidden: false, colors: false, compact: true, breakLength: 120 }))
 // logOptions now are: { showHidden: false, colors: false, compact: true, breakLength: 120 }
+console.log(setLogOptions({ showHidden: false, colors: false, compact: true, breakLength: 120 }))
 ```
 
 ### addLogOptions
 
 #### use case
 
--   combine defaults with your object, giving your options priority
+-   combine defaults with your object, giving your object priority
 
 ```js
 import { addLogOptions } from 'console-helpers'
 
+// logOptions now are defaults + { colors: false, breakLength: 120 }: { showHidden: false, depth: null, colors: false, compact: false, breakLength: 120 }
 console.log(addLogOptions({ colors: false, breakLength: 120 }))
-// logOptions now are: { showHidden: false, depth: null, colors: false, compact: false, breakLength: 120 }
 ```
 
 ### resetLogOptions
@@ -163,12 +174,12 @@ console.log(addLogOptions({ colors: false, breakLength: 120 }))
 import { resetLogOptions, addLogOptions, logOptions, logOptionsDefault } from 'console-helpers'
 
 addLogOptions({ colors: false, breakLength: 120 })
+// false because { colors: false, breakLength: 120 } was merged in
 logOptions().toString() === logOptionsDefault().toString()
-// false, { colors: false, breakLength: 120 } was merged in
+// logOptions now are defaults: { showHidden: false, depth: null, colors: true, compact: false }
 console.log(resetLogOptions())
-// logOptions now are: { showHidden: false, depth: null, colors: true, compact: false }
+// true because reset
 logOptions().toString() === logOptionsDefault().toString()
-// true, after reset
 ```
 
 ## To do

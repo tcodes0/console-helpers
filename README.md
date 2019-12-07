@@ -16,12 +16,9 @@ This lib exports some helpers you can either import and use directly or add to `
 
 `log string`
 
-### use case
 
 -   nested object that you want to log
 -   want to make console.log easier to read
-
-_maybe a better name would be log as pretty string_
 
 ```typescript
 import { logs } from 'console-helpers'
@@ -47,7 +44,6 @@ uses [util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_op
 
 `log keys`
 
-### use case
 
 -   big object that you want to understand what's inside
 -   complex props with several hocs
@@ -67,7 +63,6 @@ logk({ foo: 22, bar: 33, baz: 44 })
 
 ## `addToGlobalConsole: (isProd?: boolean | undefined) => void`
 
-### use case
 
 -   easy access to library functions with no import needed
 
@@ -112,7 +107,6 @@ console.logk
 
 ### `logOptionsDefault: () => InspectOptions`
 
-#### use case
 
 -   you want to see what the lib thinks are good default options it passes to [util.inspect](https://nodejs.org/api/util.html#util_util_inspect_object_options)
 
@@ -126,7 +120,6 @@ console.log(logOptionsDefault())
 #### types
 
 ```typescript
-// util exports the type
 import { InspectOptions } from 'util'
 
 // @types/node/globals.d.ts
@@ -167,7 +160,6 @@ interface InspectOptions {
 
 ### `logOptions: () => InspectOptions;`
 
-#### use case
 
 -   returns log options currently set
 
@@ -180,7 +172,6 @@ console.log(logOptions().toString() === logOptionsDefault().toString())
 
 ### `setLogOptions: (options: InspectOptions) => InspectOptions;`
 
-#### use case
 
 -   set log options to your provided object
 
@@ -193,7 +184,6 @@ console.log(setLogOptions({ showHidden: false, colors: false, compact: true, bre
 
 ### `addLogOptions: (options: InspectOptions) => InspectOptions;`
 
-#### use case
 
 -   combine defaults with your object, giving your object priority
 
@@ -206,7 +196,6 @@ console.log(addLogOptions({ colors: false, breakLength: 120 }))
 
 ### `resetLogOptions: () => InspectOptions;`
 
-#### use case
 
 -   reset log options to lib default
 

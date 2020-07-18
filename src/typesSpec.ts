@@ -1,6 +1,6 @@
 import { addToGlobalConsole, ExtendedConsole } from '.'
 
-declare var console: ExtendedConsole
+declare let console: ExtendedConsole
 
 addToGlobalConsole(false)
 console.logs
